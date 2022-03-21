@@ -1,5 +1,6 @@
 //Importing libraries
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -9,36 +10,55 @@ import javax.swing.SwingConstants;
 
 
 
+
 // Implimenting 'ActionListner' to listen to the keeps pressed
-public class Calculator implements ActionListener{
+public class Calculator extends CalculatorExtensions implements ActionListener{
     //global variables
     JFrame programwindow;
     JLabel displaylabel;
 
-    JButton clearButton;
-    JButton divideButton;
-    JButton multiplyButton;
-    JButton minusButton;
-    JButton sevenButton; 
-    JButton eightButton;
-    JButton nineButton;
-    JButton fourButton;
-    JButton fiveButton;
-    JButton sixButton;
-    JButton oneButton;
-    JButton twoButton;
-    JButton threeButton;
-    JButton zeroButton;
-    JButton pointButton;
-    JButton backButton;
-    JButton equalButton;
-    JButton plusButton;
+    JButton clearButton,
+            divideButton,
+            multiplyButton,
+            minusButton,
+            sevenButton,
+            eightButton,
+            nineButton,
+            fourButton,
+            fiveButton,
+            sixButton,
+            oneButton,
+            twoButton,
+            threeButton,
+            zeroButton,
+            pointButton,
+            backButton,
+            equalButton,
+            plusButton;
+    
+    // Variables for calculations
 
+    String[] numberArray = new String[100];
+    String[] operatorArray = new String[100];
+    Float result = (float) 0;
+    Float tempNumber = (float) 0;
+    Boolean isOperatorClicked = false;
+    int numArrayPosition = 0;
+    int operatorArrayPosition = 0;
+    Boolean pointIsClicked = false;
+    String tempOperator;
+    String finalResult;
 
+    // Calculator design aspects variable
 
+    // Number Designs
+    String calcFontName = "Arial";
+    int calcFontSize = 30;
+    // Operators Designs
 
 
     public Calculator() {
+
         // Creating and object for the main window
         programwindow = new JFrame("Java Calculator");
         // Not giving any default layout.
@@ -73,6 +93,7 @@ public class Calculator implements ActionListener{
         clearButton.setBounds(3, 150, 77, 90);
         clearButton.setBackground(Color.darkGray);
         clearButton.setForeground(Color.white);
+        clearButton.setFont(new Font(calcFontName, Font.PLAIN, calcFontSize));
         // when you press the button the Action listener will catch it.
         clearButton.addActionListener(this);    
         programwindow.add(clearButton);
@@ -81,6 +102,7 @@ public class Calculator implements ActionListener{
         divideButton.setBounds(82, 150, 77, 90);
         divideButton.setBackground(Color.darkGray);
         divideButton.setForeground(Color.white);
+        divideButton.setFont(new Font(calcFontName, Font.PLAIN, calcFontSize));
         divideButton.addActionListener(this); 
         programwindow.add(divideButton);
 
@@ -89,6 +111,7 @@ public class Calculator implements ActionListener{
         multiplyButton.setBounds(161, 150, 77, 90);
         multiplyButton.setBackground(Color.darkGray);
         multiplyButton.setForeground(Color.white);
+        multiplyButton.setFont(new Font(calcFontName, Font.PLAIN, calcFontSize));
         multiplyButton.addActionListener(this); 
         programwindow.add(multiplyButton);
 
@@ -96,11 +119,13 @@ public class Calculator implements ActionListener{
         minusButton.setBounds(240, 150, 77, 90);
         minusButton.setBackground(Color.darkGray);
         minusButton.setForeground(Color.white);
+        minusButton.setFont(new Font(calcFontName, Font.PLAIN, calcFontSize));
         minusButton.addActionListener(this); 
         programwindow.add(minusButton);
 
         sevenButton = new JButton("7");
         sevenButton.setBounds(3, 242, 77, 90);
+        sevenButton.setFont(new Font(calcFontName, Font.BOLD, calcFontSize));
         sevenButton.setBackground(Color.darkGray);
         sevenButton.setForeground(Color.white);
         sevenButton.addActionListener(this); 
@@ -110,6 +135,7 @@ public class Calculator implements ActionListener{
         eightButton.setBounds(82, 242, 77, 90);
         eightButton.setBackground(Color.darkGray);
         eightButton.setForeground(Color.white);
+        eightButton.setFont(new Font(calcFontName, Font.BOLD, calcFontSize));
         eightButton.addActionListener(this); 
         programwindow.add(eightButton);
 
@@ -117,6 +143,7 @@ public class Calculator implements ActionListener{
         nineButton.setBounds(161, 242, 77, 90);
         nineButton.setBackground(Color.darkGray);
         nineButton.setForeground(Color.white);
+        nineButton.setFont(new Font(calcFontName, Font.BOLD, calcFontSize));
         nineButton.addActionListener(this); 
         programwindow.add(nineButton);
 
@@ -124,6 +151,7 @@ public class Calculator implements ActionListener{
         fourButton.setBounds(3, 334, 77, 90);
         fourButton.setBackground(Color.darkGray);
         fourButton.setForeground(Color.white);
+        fourButton.setFont(new Font(calcFontName, Font.BOLD, calcFontSize));
         fourButton.addActionListener(this); 
         programwindow.add(fourButton);
 
@@ -132,6 +160,7 @@ public class Calculator implements ActionListener{
         fiveButton.setBounds(82, 334, 77, 90);
         fiveButton.setBackground(Color.darkGray);
         fiveButton.setForeground(Color.white);
+        fiveButton.setFont(new Font(calcFontName, Font.BOLD, calcFontSize));
         fiveButton.addActionListener(this); 
         programwindow.add(fiveButton);
 
@@ -139,6 +168,7 @@ public class Calculator implements ActionListener{
         sixButton.setBounds(161, 334, 77, 90);
         sixButton.setBackground(Color.darkGray);
         sixButton.setForeground(Color.white);
+        sixButton.setFont(new Font(calcFontName, Font.BOLD, calcFontSize));
         sixButton.addActionListener(this); 
         programwindow.add(sixButton);
 
@@ -146,6 +176,7 @@ public class Calculator implements ActionListener{
         oneButton.setBounds(3, 426, 77, 90);
         oneButton.setBackground(Color.darkGray);
         oneButton.setForeground(Color.white);
+        oneButton.setFont(new Font(calcFontName, Font.BOLD, calcFontSize));
         oneButton.addActionListener(this); 
         programwindow.add(oneButton);
 
@@ -153,6 +184,7 @@ public class Calculator implements ActionListener{
         twoButton.setBounds(82, 426, 77, 90);
         twoButton.setBackground(Color.darkGray);
         twoButton.setForeground(Color.white);
+        twoButton.setFont(new Font(calcFontName, Font.BOLD, calcFontSize));
         twoButton.addActionListener(this); 
         programwindow.add(twoButton);
 
@@ -160,6 +192,7 @@ public class Calculator implements ActionListener{
         threeButton.setBounds(161, 426, 77, 90);
         threeButton.setBackground(Color.darkGray);
         threeButton.setForeground(Color.white);
+        threeButton.setFont(new Font(calcFontName, Font.BOLD, calcFontSize));
         threeButton.addActionListener(this); 
         programwindow.add(threeButton);
 
@@ -167,6 +200,7 @@ public class Calculator implements ActionListener{
         zeroButton.setBounds(3, 518, 77, 90);
         zeroButton.setBackground(Color.darkGray);
         zeroButton.setForeground(Color.white);
+        zeroButton.setFont(new Font(calcFontName, Font.BOLD, calcFontSize));
         zeroButton.addActionListener(this); 
         programwindow.add(zeroButton);
 
@@ -205,80 +239,250 @@ public class Calculator implements ActionListener{
         // When the user close the main window the program ends.
         programwindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-    public static void main(String[] args){
-        new Calculator();
-
-    }
+    
     // This method will catch the key presses
     @Override
     public void actionPerformed(ActionEvent e) {
-        // programwindow.getContentPane().setBackground(Color.orange);
-
-        if(e.getSource() == clearButton) {
+        //clearing the zero on the startup screen
+        if(displaylabel.getText() == "0") {
             displaylabel.setText("");
 
         }
-        else if(e.getSource() == divideButton ) {
+
+        if(e.getSource() == clearButton) {
+            displaylabel.setText("");
+            this.operatorArray = null;
+            this.numberArray = null;
+            isOperatorClicked = false;
+            numArrayPosition = 0;
+            operatorArrayPosition = 0;
+            pointIsClicked = false;
 
         }
-        else if(e.getSource() == multiplyButton ) {
+        else if (e.getSource() == plusButton) {
+            operatorArray[operatorArrayPosition] = "+";
+            operatorArrayPosition++;
+            isOperatorClicked = true;
+            pointIsClicked = false;
+            System.out.println("\ninside plus ACTION\n operatorArrayPostion = "+ operatorArrayPosition+"\n result now = "+result);
+        }
+        else if(e.getSource() == divideButton) {
+            operatorArray[operatorArrayPosition] = "/";
+            operatorArrayPosition++;
+            isOperatorClicked = true;
+            pointIsClicked = false;
 
         }
-        else if(e.getSource() == minusButton ) {
+        else if(e.getSource() == multiplyButton) {
+            operatorArray[operatorArrayPosition] = "*";
+            operatorArrayPosition++;
+            isOperatorClicked = true;
+            pointIsClicked = false;
+        }
+        else if(e.getSource() == minusButton) {
+            operatorArray[operatorArrayPosition] = "-";
+            operatorArrayPosition++;
+            isOperatorClicked = true;
+            pointIsClicked = false;
 
         }
-        else if(e.getSource() == sevenButton ) {
-             
-            displaylabel.setText(displaylabel.getText()+"7");
+        else if(e.getSource() == sevenButton) {
+            if(isOperatorClicked) {
+                numberArray[numArrayPosition] = displaylabel.getText();
+                displaylabel.setText("7");
+                numArrayPosition++;
+                isOperatorClicked = false;
+                System.out.println(" inside---- isOperarorClicked--seven button\n numArrayPosition = "
+                                    +numArrayPosition+"\n number array = "+ numberArray[numArrayPosition]+"\n result now = "+result);
+            }
+            else {
+                displaylabel.setText(displaylabel.getText()+"7");
+            }
+        }
+        else if(e.getSource() == eightButton) {
+            if(isOperatorClicked) {
+                numberArray[numArrayPosition] = displaylabel.getText();
+                displaylabel.setText("8");
+                numArrayPosition++;
+                isOperatorClicked = false;
+            }
+            else {
+                displaylabel.setText(displaylabel.getText()+"8");
+            }
 
         }
-        else if(e.getSource() == eightButton ) {
-            displaylabel.setText(displaylabel.getText()+"8");
+        else if(e.getSource() == nineButton) {
+            if(isOperatorClicked) {
+                numberArray[numArrayPosition] = displaylabel.getText();
+                displaylabel.setText("9");
+                numArrayPosition++;
+                isOperatorClicked = false;
+            }
+            else {
+                displaylabel.setText(displaylabel.getText()+"9");
+            }
 
         }
-        else if(e.getSource() == nineButton ) {
-            displaylabel.setText(displaylabel.getText()+"9");
+        else if(e.getSource() == fourButton) {
+            if(isOperatorClicked) {
+                numberArray[numArrayPosition] = displaylabel.getText();
+                displaylabel.setText("4");
+                numArrayPosition++;
+                isOperatorClicked = false;
+            }
+            else {
+                displaylabel.setText(displaylabel.getText()+"4");
+            }
 
         }
-        else if(e.getSource() == fourButton ) {
-            displaylabel.setText(displaylabel.getText()+"4");
+        else if(e.getSource() == fiveButton) {
+            if(isOperatorClicked) {
+                numberArray[numArrayPosition] = displaylabel.getText();
+                displaylabel.setText("5");
+                numArrayPosition++;
+                isOperatorClicked = false;
+            }
+            else {
+                displaylabel.setText(displaylabel.getText()+"5");
+            }
 
         }
-        else if(e.getSource() == fiveButton ) {
-            displaylabel.setText(displaylabel.getText()+"5");
+        else if(e.getSource() == sixButton) {
+            if(isOperatorClicked) {
+                numberArray[numArrayPosition] = displaylabel.getText();
+                displaylabel.setText("6");
+                numArrayPosition++;
+                isOperatorClicked = false;
+            }
+            else {
+                displaylabel.setText(displaylabel.getText()+"6");
+            }
 
         }
-        else if(e.getSource() == sixButton ) {
-            displaylabel.setText(displaylabel.getText()+"6");
+        else if(e.getSource() == threeButton) {
+            if(isOperatorClicked) {
+                numberArray[numArrayPosition] = displaylabel.getText();
+                displaylabel.setText("3");
+                numArrayPosition++;
+                isOperatorClicked = false;
+            }
+            else {
+                displaylabel.setText(displaylabel.getText()+"3");
+            }
 
         }
-        else if(e.getSource() == threeButton ) {
-            displaylabel.setText(displaylabel.getText()+"3");
+        else if(e.getSource() == twoButton) {
+            if(isOperatorClicked) {
+                numberArray[numArrayPosition] = displaylabel.getText();
+                displaylabel.setText("2");
+                numArrayPosition++;
+                isOperatorClicked = false;
+            }
+            else {
+                displaylabel.setText(displaylabel.getText()+"2");
+            }
 
         }
-        else if(e.getSource() == twoButton ) {
-            displaylabel.setText(displaylabel.getText()+"2");
+        else if(e.getSource() == oneButton) {
+            if(isOperatorClicked) {
+                numberArray[numArrayPosition] = displaylabel.getText();
+                displaylabel.setText("1");
+                numArrayPosition++;
+                isOperatorClicked = false;
+            }
+            else {
+                displaylabel.setText(displaylabel.getText()+"1");
+            }
 
         }
-        else if(e.getSource() == oneButton ) {
-            displaylabel.setText(displaylabel.getText()+"1");
+        else if(e.getSource() == zeroButton) {
+            if(isOperatorClicked) {
+                numberArray[numArrayPosition] = displaylabel.getText();
+                displaylabel.setText("0");
+                numArrayPosition++;
+                isOperatorClicked = false;
+            }
+            else {
+                displaylabel.setText(displaylabel.getText()+"0");
+            }
 
         }
-        else if(e.getSource() == zeroButton ) {
-            displaylabel.setText(displaylabel.getText()+"0");
+        else if(e.getSource() == pointButton) {
+            if(pointIsClicked) {
 
+            }
+            else {
+                displaylabel.setText(displaylabel.getText()+".");
+                pointIsClicked = true;
+            }
         }
-        else if(e.getSource() == pointButton ) {
-            displaylabel.setText(displaylabel.getText()+".");
 
+        else if(e.getSource() == equalButton) {
+            System.out.println(" inside equal \nresult now = "+result);
+            numberArray[numArrayPosition] = displaylabel.getText();
+
+            try {
+
+                for(int i=0; i<(numArrayPosition+1); i++) {
+                    
+                    if(result == 0) {
+                        result = Float.parseFloat(numberArray[i]);
+                        continue;
+                    }
+
+                    tempNumber = Float.parseFloat(numberArray[i]);
+                    tempOperator = operatorArray[i-1];
+                    
+                    if(tempOperator == "+") {
+                        result = result + tempNumber;
+                    }
+                    else if (tempOperator == "-") {
+                        result = result - tempNumber;
+                    }
+                    else if (tempOperator == "*") {
+                        result = result * tempNumber;
+                    }
+                    else if (tempOperator == "/") {
+                        result = result / tempNumber;
+                    }
+                }
+            } 
+            catch (ArrayIndexOutOfBoundsException x) {
+
+                System.out.println("Exception caught");
+            }
+            finally {
+                System.out.println(" inside-- finally\n result now = "+ result);
+                if(isInteger(result)) {
+                    int temp = (int) Math.ceil(result);
+                 finalResult = Integer.toString(temp);
+                }
+                else {
+                   finalResult = Float.toString(result);
+                }
+                
+                displaylabel.setText(finalResult);
+                
+            }
         }
+        System.out.println("\nout the if statement \n");
 
     }
+    
     
     // @Override
     // public void actionPerformed(ActionEvent arg0) {
         
         
     // }
+
+    // Main function.
+    public static void main(String[] args){
+        //creating a one time object so that the codes in the costructors run.
+        new Calculator();
+
+        
+
+    }
     
 }
