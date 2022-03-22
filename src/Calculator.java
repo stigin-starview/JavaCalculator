@@ -10,7 +10,6 @@ import javax.swing.SwingConstants;
 
 
 
-
 // Implimenting 'ActionListner' to listen to the keeps pressed
 public class Calculator extends CalculatorExtensions implements ActionListener{
     //global variables
@@ -71,21 +70,30 @@ public class Calculator extends CalculatorExtensions implements ActionListener{
         // disabling window resizing.
         programwindow.setResizable(false);
 
-
+        
+        /* creating fake background to adjust the main 
+           display while the background color stays the same */
+        JLabel displayFakeBackground = new JLabel();
+        displayFakeBackground.setBackground(Color.darkGray);
+        displayFakeBackground.setBounds(0,0, 320, 148);
+        displayFakeBackground.setOpaque(true);
+        
 
         // When user enter a number it will be seen here, user wont be able to click 
         displaylabel = new JLabel("0");
         // The size and location of the label
-        displaylabel.setBounds(0,0, 320, 148);
+        displaylabel.setBounds(0,0, 310, 148);
         // Background color
         displaylabel.setBackground(Color.darkGray);
         displaylabel.setForeground(Color.white);
         // Align labelss
         displaylabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        displaylabel.setFont(new Font(calcFontName, Font.PLAIN, calcFontSize));
         // View all the elements on the screen
         displaylabel.setOpaque(true);
         // Adding this label to the main output window
         programwindow.add(displaylabel);
+        programwindow.add(displayFakeBackground);
 
 
         // Creating buttons;
@@ -209,13 +217,15 @@ public class Calculator extends CalculatorExtensions implements ActionListener{
         pointButton.setBounds(82, 518, 77, 90);
         pointButton.setBackground(Color.darkGray);
         pointButton.setForeground(Color.white);
+        pointButton.setFont(new Font(calcFontName, Font.BOLD, calcFontSize));
         pointButton.addActionListener(this); 
         programwindow.add(pointButton);
 
-        backButton = new JButton("<==");
+        backButton = new JButton("<-");
         backButton.setBounds(161, 518, 77, 90);
         backButton.setBackground(Color.darkGray);
         backButton.setForeground(Color.white);
+        backButton.setFont(new Font(calcFontName, Font.BOLD, calcFontSize));
         backButton.addActionListener(this); 
         programwindow.add(backButton);
 
@@ -223,6 +233,7 @@ public class Calculator extends CalculatorExtensions implements ActionListener{
         equalButton.setBounds(240, 518, 77, 90);
         equalButton.setBackground(Color.darkGray);
         equalButton.setForeground(Color.white);
+        equalButton.setFont(new Font(calcFontName, Font.BOLD, calcFontSize));
         equalButton.addActionListener(this); 
         programwindow.add(equalButton);
 
@@ -230,6 +241,7 @@ public class Calculator extends CalculatorExtensions implements ActionListener{
         plusButton.setBounds(240, 242, 77, 274);
         plusButton.setBackground(Color.darkGray);
         plusButton.setForeground(Color.white);
+        plusButton.setFont(new Font(calcFontName, Font.BOLD, calcFontSize));
         plusButton.addActionListener(this); 
         programwindow.add(plusButton);
 
@@ -244,12 +256,13 @@ public class Calculator extends CalculatorExtensions implements ActionListener{
     // This method will catch the key presses
     @Override
     public void actionPerformed(ActionEvent e) {
-        //clearing the zero on the startup screen
+
+        //clearing the zero on the startup screens
         if(displaylabel.getText() == "0") {
             displaylabel.setText("");
 
         }
-
+        //Button functions
         if(e.getSource() == clearButton) {
             displaylabel.setText("");
             isOperatorClicked = false;
@@ -260,6 +273,12 @@ public class Calculator extends CalculatorExtensions implements ActionListener{
             equalButtonClicked = false;
             displaylabel.setText("0");
 
+        }
+        else if(e.getSource() == backButton) {
+            String tempVar = displaylabel.getText();
+            // Using substring and index number to trim the last letter. 
+            tempVar = tempVar.substring(0, tempVar.length() - 1);
+            displaylabel.setText(tempVar);
         }
         else if (e.getSource() == plusButton) {
             operatorArray[operatorArrayPosition] = "+";
@@ -289,6 +308,7 @@ public class Calculator extends CalculatorExtensions implements ActionListener{
 
         }
         else if(e.getSource() == sevenButton) {
+            // IF operator clicked, store the number and display the fucntions number.
             if(isOperatorClicked) {
                 numberArray[numArrayPosition] = displaylabel.getText();
                 displaylabel.setText("7");
@@ -409,6 +429,7 @@ public class Calculator extends CalculatorExtensions implements ActionListener{
             }
 
         }
+        
         else if(e.getSource() == pointButton) {
             if(pointIsClicked) {
 
@@ -418,19 +439,17 @@ public class Calculator extends CalculatorExtensions implements ActionListener{
                 pointIsClicked = true;
             }
         }
-
+        
         else if(e.getSource() == equalButton) {
-            System.out.println("\n-----------inside equal method ------------\n\nresult now = "+result);
+            //Getting the last number to the array
             numberArray[numArrayPosition] = displaylabel.getText();
-            System.out.print("  numberArray["+numArrayPosition+"] = "+  numberArray[numArrayPosition]+"\n");
-
+            // tr-cathc method is used to catch errors prevent the application from breaking. 
             try {
-                System.out.println("inside try");
-
+                
                 for(int i=0; i<=numArrayPosition; i++) {
-                    System.out.println("inside for loop -- i = "+i);
+                    
                     if(result == 0) {
-                        System.out.println("inside nested if for loop");
+                        //assigning value to result for easy calsulations 
                         result = Float.parseFloat(numberArray[i]);
                         continue;
                     }
@@ -438,18 +457,16 @@ public class Calculator extends CalculatorExtensions implements ActionListener{
                     if (equalButtonClicked) {
                         tempOperator = operatorArray[i];
                         tempNumber = Float.parseFloat(numberArray[i+1]);
-                        System.out.println("equal button clicked");
+                        i++;
                     }
                     else {
                         tempOperator = operatorArray[i-1];
                         tempNumber = Float.parseFloat(numberArray[i]);
                     }
                     
-                    System.out.println("for loop no."+i+"\n"+result+" "+tempOperator+" "+tempNumber);
-                    
-                    
                     if(tempOperator == "+") {
                         result = result + tempNumber;
+                        
                     }
                     else if (tempOperator == "-") {
                         result = result - tempNumber;
@@ -464,10 +481,13 @@ public class Calculator extends CalculatorExtensions implements ActionListener{
             } 
             catch (ArrayIndexOutOfBoundsException x) {
 
-                System.out.println("Exception caught");
+                System.out.println("Exception caught: ArrayIndexOutOfBoundsException\n invalid index number in array.");
+            }
+            catch(NumberFormatException s) {
+                System.out.println("Exception caught: NumberFormatException \n no number inputs from user");
             }
             finally {
-                System.out.println(" inside-- finally\n result now = "+ result);
+
                 if(isInteger(result)) {
                     int temp = (int) Math.ceil(result);
                  finalResult = Integer.toString(temp);
@@ -475,17 +495,12 @@ public class Calculator extends CalculatorExtensions implements ActionListener{
                 else {
                    finalResult = Float.toString(result);
                 }
-                System.out.println("final result: "+ finalResult);
+
                 displaylabel.setText(finalResult);
-                System.out.println("check 1 -----------------------");
+                //Resetting variables.
                 numArrayPosition = 0;
-                System.out.println("check 2 -----------------------");
                 operatorArrayPosition = 0;
-                System.out.println("check 3 -----------------------");
-                // numberArray[numArrayPosition] = finalResult;
-                
                 equalButtonClicked = true;
-                System.out.println("check 4 -----------------------");
                 
             }
         }

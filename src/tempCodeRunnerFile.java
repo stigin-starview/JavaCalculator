@@ -1,4 +1,2 @@
-else if(e.getSource() == sevenButton ) {
-            displaylabel.setText("7");
-
-        }
+(50));
+        // clearButton.setSize(100,100);
