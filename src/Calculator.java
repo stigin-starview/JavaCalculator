@@ -48,6 +48,7 @@ public class Calculator extends CalculatorExtensions implements ActionListener{
     Boolean pointIsClicked = false;
     String tempOperator;
     String finalResult;
+    Boolean equalButtonClicked = false;
 
     // Calculator design aspects variable
 
@@ -251,12 +252,13 @@ public class Calculator extends CalculatorExtensions implements ActionListener{
 
         if(e.getSource() == clearButton) {
             displaylabel.setText("");
-            this.operatorArray = null;
-            this.numberArray = null;
             isOperatorClicked = false;
+            pointIsClicked = false; 
             numArrayPosition = 0;
             operatorArrayPosition = 0;
-            pointIsClicked = false;
+            result = (float) 0;
+            equalButtonClicked = false;
+            displaylabel.setText("0");
 
         }
         else if (e.getSource() == plusButton) {
@@ -264,7 +266,7 @@ public class Calculator extends CalculatorExtensions implements ActionListener{
             operatorArrayPosition++;
             isOperatorClicked = true;
             pointIsClicked = false;
-            System.out.println("\ninside plus ACTION\n operatorArrayPostion = "+ operatorArrayPosition+"\n result now = "+result);
+            
         }
         else if(e.getSource() == divideButton) {
             operatorArray[operatorArrayPosition] = "/";
@@ -292,8 +294,7 @@ public class Calculator extends CalculatorExtensions implements ActionListener{
                 displaylabel.setText("7");
                 numArrayPosition++;
                 isOperatorClicked = false;
-                System.out.println(" inside---- isOperarorClicked--seven button\n numArrayPosition = "
-                                    +numArrayPosition+"\n number array = "+ numberArray[numArrayPosition]+"\n result now = "+result);
+        
             }
             else {
                 displaylabel.setText(displaylabel.getText()+"7");
@@ -341,6 +342,7 @@ public class Calculator extends CalculatorExtensions implements ActionListener{
                 displaylabel.setText("5");
                 numArrayPosition++;
                 isOperatorClicked = false;
+                
             }
             else {
                 displaylabel.setText(displaylabel.getText()+"5");
@@ -418,20 +420,33 @@ public class Calculator extends CalculatorExtensions implements ActionListener{
         }
 
         else if(e.getSource() == equalButton) {
-            System.out.println(" inside equal \nresult now = "+result);
+            System.out.println("\n-----------inside equal method ------------\n\nresult now = "+result);
             numberArray[numArrayPosition] = displaylabel.getText();
+            System.out.print("  numberArray["+numArrayPosition+"] = "+  numberArray[numArrayPosition]+"\n");
 
             try {
+                System.out.println("inside try");
 
-                for(int i=0; i<(numArrayPosition+1); i++) {
-                    
+                for(int i=0; i<=numArrayPosition; i++) {
+                    System.out.println("inside for loop -- i = "+i);
                     if(result == 0) {
+                        System.out.println("inside nested if for loop");
                         result = Float.parseFloat(numberArray[i]);
                         continue;
                     }
-
-                    tempNumber = Float.parseFloat(numberArray[i]);
-                    tempOperator = operatorArray[i-1];
+                    
+                    if (equalButtonClicked) {
+                        tempOperator = operatorArray[i];
+                        tempNumber = Float.parseFloat(numberArray[i+1]);
+                        System.out.println("equal button clicked");
+                    }
+                    else {
+                        tempOperator = operatorArray[i-1];
+                        tempNumber = Float.parseFloat(numberArray[i]);
+                    }
+                    
+                    System.out.println("for loop no."+i+"\n"+result+" "+tempOperator+" "+tempNumber);
+                    
                     
                     if(tempOperator == "+") {
                         result = result + tempNumber;
@@ -460,21 +475,24 @@ public class Calculator extends CalculatorExtensions implements ActionListener{
                 else {
                    finalResult = Float.toString(result);
                 }
-                
+                System.out.println("final result: "+ finalResult);
                 displaylabel.setText(finalResult);
+                System.out.println("check 1 -----------------------");
+                numArrayPosition = 0;
+                System.out.println("check 2 -----------------------");
+                operatorArrayPosition = 0;
+                System.out.println("check 3 -----------------------");
+                // numberArray[numArrayPosition] = finalResult;
+                
+                equalButtonClicked = true;
+                System.out.println("check 4 -----------------------");
                 
             }
         }
-        System.out.println("\nout the if statement \n");
+    
 
     }
     
-    
-    // @Override
-    // public void actionPerformed(ActionEvent arg0) {
-        
-        
-    // }
 
     // Main function.
     public static void main(String[] args){
