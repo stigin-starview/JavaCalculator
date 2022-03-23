@@ -52,7 +52,7 @@ public class Calculator extends CalculatorExtensions implements ActionListener{
     // Calculator design aspects variable
 
     // Number Designs
-    String calcFontName = "Arial";
+    String calcFontName = "Monospace";
     int calcFontSize = 30;
     // Operators Designs
 
@@ -69,13 +69,14 @@ public class Calculator extends CalculatorExtensions implements ActionListener{
         programwindow.setLocation(1200, 200);
         // disabling window resizing.
         programwindow.setResizable(false);
+        
 
         
         /* creating fake background to adjust the main 
            display while the background color stays the same */
         JLabel displayFakeBackground = new JLabel();
-        displayFakeBackground.setBackground(Color.darkGray);
-        displayFakeBackground.setBounds(0,0, 320, 148);
+        displayFakeBackground.setBackground(Color.DARK_GRAY);
+        displayFakeBackground.setBounds(0,0,500, 1000);
         displayFakeBackground.setOpaque(true);
         
 
@@ -84,7 +85,7 @@ public class Calculator extends CalculatorExtensions implements ActionListener{
         // The size and location of the label
         displaylabel.setBounds(0,0, 310, 148);
         // Background color
-        displaylabel.setBackground(Color.darkGray);
+        displaylabel.setBackground(Color.DARK_GRAY);
         displaylabel.setForeground(Color.white);
         // Align labelss
         displaylabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -93,23 +94,24 @@ public class Calculator extends CalculatorExtensions implements ActionListener{
         displaylabel.setOpaque(true);
         // Adding this label to the main output window
         programwindow.add(displaylabel);
-        programwindow.add(displayFakeBackground);
+        
 
 
         // Creating buttons;
 
         clearButton = new JButton("C");
         clearButton.setBounds(3, 150, 77, 90);
-        clearButton.setBackground(Color.darkGray);
-        clearButton.setForeground(Color.white);
+        clearButton.setBackground(Color.black);
+        clearButton.setForeground(Color.orange);
         clearButton.setFont(new Font(calcFontName, Font.PLAIN, calcFontSize));
         // when you press the button the Action listener will catch it.
         clearButton.addActionListener(this);    
         programwindow.add(clearButton);
 
+
         divideButton = new JButton("/");
         divideButton.setBounds(82, 150, 77, 90);
-        divideButton.setBackground(Color.darkGray);
+        divideButton.setBackground(Color.black);
         divideButton.setForeground(Color.white);
         divideButton.setFont(new Font(calcFontName, Font.PLAIN, calcFontSize));
         divideButton.addActionListener(this); 
@@ -118,7 +120,7 @@ public class Calculator extends CalculatorExtensions implements ActionListener{
 
         multiplyButton = new JButton("x");
         multiplyButton.setBounds(161, 150, 77, 90);
-        multiplyButton.setBackground(Color.darkGray);
+        multiplyButton.setBackground(Color.black);
         multiplyButton.setForeground(Color.white);
         multiplyButton.setFont(new Font(calcFontName, Font.PLAIN, calcFontSize));
         multiplyButton.addActionListener(this); 
@@ -126,7 +128,7 @@ public class Calculator extends CalculatorExtensions implements ActionListener{
 
         minusButton = new JButton("-");
         minusButton.setBounds(240, 150, 77, 90);
-        minusButton.setBackground(Color.darkGray);
+        minusButton.setBackground(Color.black);
         minusButton.setForeground(Color.white);
         minusButton.setFont(new Font(calcFontName, Font.PLAIN, calcFontSize));
         minusButton.addActionListener(this); 
@@ -135,14 +137,14 @@ public class Calculator extends CalculatorExtensions implements ActionListener{
         sevenButton = new JButton("7");
         sevenButton.setBounds(3, 242, 77, 90);
         sevenButton.setFont(new Font(calcFontName, Font.BOLD, calcFontSize));
-        sevenButton.setBackground(Color.darkGray);
+        sevenButton.setBackground(Color.black);
         sevenButton.setForeground(Color.white);
         sevenButton.addActionListener(this); 
         programwindow.add(sevenButton);
 
         eightButton = new JButton("8");
         eightButton.setBounds(82, 242, 77, 90);
-        eightButton.setBackground(Color.darkGray);
+        eightButton.setBackground(Color.black);
         eightButton.setForeground(Color.white);
         eightButton.setFont(new Font(calcFontName, Font.BOLD, calcFontSize));
         eightButton.addActionListener(this); 
@@ -150,7 +152,7 @@ public class Calculator extends CalculatorExtensions implements ActionListener{
 
         nineButton = new JButton("9");
         nineButton.setBounds(161, 242, 77, 90);
-        nineButton.setBackground(Color.darkGray);
+        nineButton.setBackground(Color.black);
         nineButton.setForeground(Color.white);
         nineButton.setFont(new Font(calcFontName, Font.BOLD, calcFontSize));
         nineButton.addActionListener(this); 
@@ -158,7 +160,7 @@ public class Calculator extends CalculatorExtensions implements ActionListener{
 
         fourButton = new JButton("4");
         fourButton.setBounds(3, 334, 77, 90);
-        fourButton.setBackground(Color.darkGray);
+        fourButton.setBackground(Color.black);
         fourButton.setForeground(Color.white);
         fourButton.setFont(new Font(calcFontName, Font.BOLD, calcFontSize));
         fourButton.addActionListener(this); 
@@ -167,7 +169,7 @@ public class Calculator extends CalculatorExtensions implements ActionListener{
 
         fiveButton = new JButton("5");
         fiveButton.setBounds(82, 334, 77, 90);
-        fiveButton.setBackground(Color.darkGray);
+        fiveButton.setBackground(Color.black);
         fiveButton.setForeground(Color.white);
         fiveButton.setFont(new Font(calcFontName, Font.BOLD, calcFontSize));
         fiveButton.addActionListener(this); 
@@ -175,7 +177,7 @@ public class Calculator extends CalculatorExtensions implements ActionListener{
 
         sixButton = new JButton("6");
         sixButton.setBounds(161, 334, 77, 90);
-        sixButton.setBackground(Color.darkGray);
+        sixButton.setBackground(Color.black);
         sixButton.setForeground(Color.white);
         sixButton.setFont(new Font(calcFontName, Font.BOLD, calcFontSize));
         sixButton.addActionListener(this); 
@@ -183,7 +185,7 @@ public class Calculator extends CalculatorExtensions implements ActionListener{
 
         oneButton = new JButton("1");
         oneButton.setBounds(3, 426, 77, 90);
-        oneButton.setBackground(Color.darkGray);
+        oneButton.setBackground(Color.black);
         oneButton.setForeground(Color.white);
         oneButton.setFont(new Font(calcFontName, Font.BOLD, calcFontSize));
         oneButton.addActionListener(this); 
@@ -191,7 +193,7 @@ public class Calculator extends CalculatorExtensions implements ActionListener{
 
         twoButton = new JButton("2");
         twoButton.setBounds(82, 426, 77, 90);
-        twoButton.setBackground(Color.darkGray);
+        twoButton.setBackground(Color.black);
         twoButton.setForeground(Color.white);
         twoButton.setFont(new Font(calcFontName, Font.BOLD, calcFontSize));
         twoButton.addActionListener(this); 
@@ -199,7 +201,7 @@ public class Calculator extends CalculatorExtensions implements ActionListener{
 
         threeButton = new JButton("3");
         threeButton.setBounds(161, 426, 77, 90);
-        threeButton.setBackground(Color.darkGray);
+        threeButton.setBackground(Color.black);
         threeButton.setForeground(Color.white);
         threeButton.setFont(new Font(calcFontName, Font.BOLD, calcFontSize));
         threeButton.addActionListener(this); 
@@ -207,7 +209,7 @@ public class Calculator extends CalculatorExtensions implements ActionListener{
 
         zeroButton = new JButton("0");
         zeroButton.setBounds(3, 518, 77, 90);
-        zeroButton.setBackground(Color.darkGray);
+        zeroButton.setBackground(Color.black);
         zeroButton.setForeground(Color.white);
         zeroButton.setFont(new Font(calcFontName, Font.BOLD, calcFontSize));
         zeroButton.addActionListener(this); 
@@ -215,7 +217,7 @@ public class Calculator extends CalculatorExtensions implements ActionListener{
 
         pointButton = new JButton(".");
         pointButton.setBounds(82, 518, 77, 90);
-        pointButton.setBackground(Color.darkGray);
+        pointButton.setBackground(Color.black);
         pointButton.setForeground(Color.white);
         pointButton.setFont(new Font(calcFontName, Font.BOLD, calcFontSize));
         pointButton.addActionListener(this); 
@@ -223,7 +225,7 @@ public class Calculator extends CalculatorExtensions implements ActionListener{
 
         backButton = new JButton("<-");
         backButton.setBounds(161, 518, 77, 90);
-        backButton.setBackground(Color.darkGray);
+        backButton.setBackground(Color.black);
         backButton.setForeground(Color.white);
         backButton.setFont(new Font(calcFontName, Font.BOLD, calcFontSize));
         backButton.addActionListener(this); 
@@ -231,7 +233,7 @@ public class Calculator extends CalculatorExtensions implements ActionListener{
 
         equalButton = new JButton("=");
         equalButton.setBounds(240, 518, 77, 90);
-        equalButton.setBackground(Color.darkGray);
+        equalButton.setBackground(Color.orange);
         equalButton.setForeground(Color.white);
         equalButton.setFont(new Font(calcFontName, Font.BOLD, calcFontSize));
         equalButton.addActionListener(this); 
@@ -239,14 +241,14 @@ public class Calculator extends CalculatorExtensions implements ActionListener{
 
         plusButton = new JButton("+");
         plusButton.setBounds(240, 242, 77, 274);
-        plusButton.setBackground(Color.darkGray);
+        plusButton.setBackground(Color.black);
         plusButton.setForeground(Color.white);
         plusButton.setFont(new Font(calcFontName, Font.BOLD, calcFontSize));
         plusButton.addActionListener(this); 
         programwindow.add(plusButton);
 
 
-        
+        programwindow.add(displayFakeBackground);
         // To let the user see the program window
         programwindow.setVisible(true);
         // When the user close the main window the program ends.
