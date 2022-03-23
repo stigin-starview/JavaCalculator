@@ -1,6 +1,7 @@
 ## Getting Started
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+This is a java calculator program with basic calculator functions. Swing libarary is used to create button and program window.
+underlying code is a combination of for loops and if else statements with multiple arrays to hold values.
 
 ## Folder Structure
 
